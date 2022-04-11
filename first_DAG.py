@@ -16,13 +16,13 @@ def csv_to_json():
 
 default_args = {
     'owner': 'mike',
-    'state_date': dt.datetime(2022, 4, 11),
+    'start_date': dt.datetime(2022, 4, 11),
     'retires': 1,
     'retry_delay': dt.timedelta(minutes=5)
 }
 
 with DAG('my_csv_DAG',
-         default_args = default_args,
+         default_args=default_args,
          schedule_interval=timedelta(minutes=5)) as dag:
 
     # Define your tasks:
