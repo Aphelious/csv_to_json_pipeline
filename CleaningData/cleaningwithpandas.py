@@ -52,6 +52,13 @@ pd.set_option('display.max_columns', 15)
 # df.dropna(axis='index', thresh=len(df)*.25)
 
 ## Can use the fillna method to fill in holes in the data based on different criteria
-print(df.isnull().sum())
-df.fillna(axis='columns', value='00:00:00', inplace=True)
-print(df.isnull().sum())
+# print(df.isnull().sum())
+# df.fillna(axis='columns', value='00:00:00', inplace=True)
+# print(df.isnull().sum())
+
+## Advanced filtering by passing a dict of replacement values into the fillna() method
+start_stop = df[(df['start_location_name'].isnull())&(df['end_location_name'].isnull())]
+value = {'start_location_name':'Start St.', 'end_location_name':'Stop St.'}
+print(start_stop[['start_location_name', 'end_location_name']])
+new_start_stop = start_stop.fillna(value=value)
+print(new_start_stop[['start_location_name', 'end_location_name']])
