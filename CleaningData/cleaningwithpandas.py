@@ -49,6 +49,9 @@ pd.set_option('display.max_columns', 15)
 # df.dropna(subset=['start_location_name'], inplace=True)
 
 ## Can drop an entire column if the total number of na is more than a given percentage
-df.dropna(axis='index', thresh=len(df)*.25)
+# df.dropna(axis='index', thresh=len(df)*.25)
 
-
+## Can use the fillna method to fill in holes in the data based on different criteria
+print(df.isnull().sum())
+df.fillna(axis='columns', value='00:00:00', inplace=True)
+print(df.isnull().sum())
