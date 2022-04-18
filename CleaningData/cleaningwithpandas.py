@@ -64,6 +64,22 @@ pd.set_option('display.max_columns', 15)
 # print(new_start_stop[['start_location_name', 'end_location_name']])
 
 ## Advanced filtering by creating 'sub-dataframes':
-may = df[(df['month']=='May')]
-df.drop(index=may.index, inplace=True)
-print(df['month'].value_counts())
+# may = df[(df['month']=='May')]
+# df.drop(index=may.index, inplace=True)
+# print(df['month'].value_counts())
+
+## Formatting dataframe columns and data
+# df.columns = [x.lower() for x in df.columns]    # list comprehension to modify the df column names
+# print(df.columns)
+
+## Modify
+# df['month']=df['month'].str.upper()
+# print(df)
+
+## Iterate through the dataframe and input a value into each row under a new column
+for i, r in df.head().iterrows():
+    if r['trip_id']==1613335:
+        df.at[i, 'new_column'] = 'Yes'
+    else:
+        df.at[i, 'new_column'] = 'No'
+print(df[['trip_id', 'new_column']].head())
