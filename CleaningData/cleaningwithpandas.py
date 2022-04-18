@@ -57,8 +57,13 @@ pd.set_option('display.max_columns', 15)
 # print(df.isnull().sum())
 
 ## Advanced filtering by passing a dict of replacement values into the fillna() method
-start_stop = df[(df['start_location_name'].isnull())&(df['end_location_name'].isnull())]
-value = {'start_location_name':'Start St.', 'end_location_name':'Stop St.'}
-print(start_stop[['start_location_name', 'end_location_name']])
-new_start_stop = start_stop.fillna(value=value)
-print(new_start_stop[['start_location_name', 'end_location_name']])
+# start_stop = df[(df['start_location_name'].isnull())&(df['end_location_name'].isnull())]
+# value = {'start_location_name':'Start St.', 'end_location_name':'Stop St.'}
+# print(start_stop[['start_location_name', 'end_location_name']])
+# new_start_stop = start_stop.fillna(value=value)
+# print(new_start_stop[['start_location_name', 'end_location_name']])
+
+## Advanced filtering by creating 'sub-dataframes':
+may = df[(df['month']=='May')]
+df.drop(index=may.index, inplace=True)
+print(df['month'].value_counts())
