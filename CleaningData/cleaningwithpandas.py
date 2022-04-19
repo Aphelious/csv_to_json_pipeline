@@ -77,9 +77,18 @@ pd.set_option('display.max_columns', 15)
 # print(df)
 
 ## Iterate through the dataframe and input a value into each row under a new column
-for i, r in df.head().iterrows():
-    if r['trip_id']==1613335:
-        df.at[i, 'new_column'] = 'Yes'
-    else:
-        df.at[i, 'new_column'] = 'No'
-print(df[['trip_id', 'new_column']].head())
+# for i, r in df.head().iterrows():
+#     if r['trip_id']==1613335:
+#         df.at[i, 'new_column'] = 'Yes'
+#     else:
+#         df.at[i, 'new_column'] = 'No'
+# print(df[['trip_id', 'new_column']].head())
+
+## Splitting columns into new columns using df.str.split()
+started_at = df['started_at'].str.split(expand=True)
+print(started_at.head())
+started_at['date'] = started_at[0]
+started_at['time'] = started_at[1]
+print(started_at['date'])
+print(started_at['time'])
+
