@@ -40,7 +40,6 @@ with DAG('scooter_dag',
 
     copyfile = BashOperator(
         task_id='copy',
-        bash_command='''cp /Users/mike/Desktop/Main/Programming/Projects/Tutorials/dataeng/CleaningData/escooter/may23_to_june3.csv
-        /Users/mike/Desktop''')
+        bash_command='cp /Users/mike/Desktop/Main/Programming/Projects/Tutorials/dataeng/CleaningData/escooter/may23_to_june3.csv /Users/mike/Desktop')
 
     cleanData >> selectData >> copyfile
