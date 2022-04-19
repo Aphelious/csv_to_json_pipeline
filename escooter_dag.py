@@ -20,3 +20,14 @@ def clean_scooter():
     df['started_at'] = pd.to_datetime(df['started_at'], format= '%m/%d/%y %H:%M')   # Cast generic object to dt object
     df.to_csv(r'/Users/mike/Desktop/Main/Programming/Projects/Tutorials/dataeng/CleaningData/escooter/clean_scooter.csv')
 
+
+def filter_data():
+    df = pd.read_csv(
+        r'/Users/mike/Desktop/Main/Programming/Projects/Tutorials/dataeng/CleaningData/escooter/clean_scooter.csv')
+    from_date = '2019-05-23'
+    to_date = '2019-06-03'
+    to_from_df = df[(df['started_at'] > from_date) & (df['started_at'] > to_date)]
+    to_from_df.to_csv(
+        r'/Users/mike/Desktop/Main/Programming/Projects/Tutorials/dataeng/CleaningData/escooter/may23_to_june3.csv')
+
+
