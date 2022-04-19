@@ -16,7 +16,8 @@ pd.set_option('display.max_columns', 15)
 # print(df[['trip_id','DURATION']])
 # print(df[:10])
 # print(df[10:])
-#
+# print(df.columns[3])
+
 # ## Pandas Where, Loc, At methods:
 # print(df.loc[182])  ## Prints the whole row at index 182
 # print(df.at[182, 'DURATION'])   ## Prints the value of DURATION column at index 182
@@ -74,7 +75,7 @@ pd.set_option('display.max_columns', 15)
 
 ## Modify
 # df['month']=df['month'].str.upper()
-# print(df)
+# print(df['month'].head())
 
 ## Iterate through the dataframe and input a value into each row under a new column
 # for i, r in df.head().iterrows():
@@ -85,10 +86,36 @@ pd.set_option('display.max_columns', 15)
 # print(df[['trip_id', 'new_column']].head())
 
 ## Splitting columns into new columns using df.str.split()
-started_at = df['started_at'].str.split(expand=True)
-print(started_at.head())
-started_at['date'] = started_at[0]
-started_at['time'] = started_at[1]
-print(started_at['date'])
-print(started_at['time'])
+# started_at = df['started_at'].str.split(expand=True)
+# print(started_at.head())
+# started_at['date'] = started_at[0]
+# started_at['time'] = started_at[1]
+# print(started_at['date'])
+# print(started_at['time'])
 
+## Handling Datetime object conversion from generic 'object' types
+# df['started_at'] = pd.to_datetime(df['started_at'], format='%m/%d/%Y %H:%M')
+# print(df.dtypes)
+#
+# when = '2019-06-23'
+# x = df[df['started_at']>when]
+# print(len(x))
+
+## Filtering out the top five locations, spliting on street, format adjustment, overwrite original
+new = pd.DataFrame(df['start_location_name'].value_counts().head())
+new.reset_index(inplace=True)
+new.columns=['address', 'count']
+n = new['address'].str.split(pat=',',n=1, expand=True)
+replaced = n[0].str.replace('@', 'and')
+new['street'] = replaced
+# print(new)
+
+
+## Joining two dataframes just like in SQL using the df.join() method:
+geo = pd.read_csv(r'/Users/mike/Desktop/Main/Programming/Projects/Tutorials/dataeng/CleaningData/escooter/geocodedstreet.csv')
+# joined = new.join(other=geo, how='left', lsuffix='_new', rsuffix='_geo')
+# print(joined[['street_new', 'street_geo', 'x', 'y']])
+
+## Merging is just like a join but duplicate cols are removed, cleaner
+new_geo_merged = pd.merge(new, geo, on='street')
+print(new_geo_merged)
