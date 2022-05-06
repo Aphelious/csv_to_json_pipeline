@@ -7,7 +7,7 @@ df = pd.read_csv(r'escooter/scooter.csv')
 pd.set_option('display.max_columns', 15)
 
 # ## Some simple display methods:
-# print(df.head())
+print(df.head())
 # print(df.tail())
 # print(df.sample(5))
 #
@@ -32,11 +32,11 @@ pd.set_option('display.max_columns', 15)
 
 ## Describe method outputs basic distribution statistics but is not always apporpriate.
 # print(df.describe())
-#
 # ## Can be called on a single column:
 # print(df['start_location_name'].describe())
 
 ## value_counts() method will return a table of values and their frequency in the dataset:
+## Nomalize parameter will return the count as a percentage
 # print(df['DURATION'].value_counts(normalize=True))
 
 ## isnull() will return bool if a value is null but can be used in conjunction with sum() to get a total:
@@ -102,20 +102,22 @@ pd.set_option('display.max_columns', 15)
 # print(len(x))
 
 ## Filtering out the top five locations, spliting on street, format adjustment, overwrite original
-new = pd.DataFrame(df['start_location_name'].value_counts().head())
-new.reset_index(inplace=True)
-new.columns=['address', 'count']
-n = new['address'].str.split(pat=',',n=1, expand=True)
-replaced = n[0].str.replace('@', 'and')
-new['street'] = replaced
-# print(new)
-
+# new = pd.DataFrame(df['start_location_name'].value_counts().head())
+# new.reset_index(inplace=True)
+# new.columns=['address', 'count']
+# n = new['address'].str.split(pat=',',n=1, expand=True)
+# replaced = n[0].str.replace('@', 'and')
+# new['street'] = replaced
 
 ## Joining two dataframes just like in SQL using the df.join() method:
-geo = pd.read_csv(r'/Users/mike/Desktop/Main/Programming/Projects/Tutorials/dataeng/CleaningData/escooter/geocodedstreet.csv')
+# geo = pd.read_csv(r'/Users/mike/Desktop/Main/Programming/Projects/Tutorials/dataeng/CleaningData/escooter/geocodedstreet.csv')
 # joined = new.join(other=geo, how='left', lsuffix='_new', rsuffix='_geo')
 # print(joined[['street_new', 'street_geo', 'x', 'y']])
 
 ## Merging is just like a join but duplicate cols are removed, cleaner
-new_geo_merged = pd.merge(new, geo, on='street')
-print(new_geo_merged)
+# new_geo_merged = pd.merge(new, geo, on='street')
+# print(new_geo_merged)
+
+
+## Pandas can generate table schema based on a dataframe, pass engine from SQLalchemy it will be dialect-specific
+# print(pd.io.sql.get_schema(df, name='table_name', con=engine))
